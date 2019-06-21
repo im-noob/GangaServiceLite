@@ -5,6 +5,9 @@ import {
     Dimensions,
     Modal,
     StatusBar,
+    BackHandler,
+    Alert,
+    ToastAndroid
 } from "react-native";
 
 import { 
@@ -17,12 +20,60 @@ export default class HomeScreen extends Component {
         this.state = {
             renderCoponentFlag: false,
             LodingModal: true,
+            backPress: 0,
         }
     }
-   
+    webView = {
+      canGoBack: false,
+      ref: null,
+    }
+  
     componentDidMount = async() => {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        
         setTimeout(() => {this.setState({renderCoponentFlag: true})}, 0);
     }
+    componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+      }
+
+      handleBackButton = () => {
+        if (this.webView.canGoBack && this.webView.ref) {
+          this.webView.ref.goBack();
+          return true;
+        }
+        return false;
+          // let timestamp = new Date().getTime();
+          // console.log(timestamp);
+          
+          // if(this.state.backPress - timestamp >= 500 ){
+          //     ToastAndroid.show('Press Again to Exit App', ToastAndroid.SHORT);
+          //     this.setState({
+          //         backPress:1,
+          //     })
+          //     return true;
+          // }
+          // Alert.alert(
+          //     'Payment Notice',
+          //     'Want to cancle Payment ?', [{
+          //         text: 'Cancel',
+          //         onPress: () => console.log('Cancel Pressed'),
+          //         style: 'cancel'
+          //     }, {
+          //         text: 'OK',
+          //         onPress: () => {alert("Opps Payment Failed.. Try again...");  this.props.navigation.goBack(); }
+          //     }, ], {
+          //         cancelable: false
+          //     }
+          // )
+          // return true;
+        } 
+        backHandler = () => {
+          if(this.state.backButtonEnabled) {
+              this.refs[WEBVIEW_REF].goBack();
+              return true;
+          }
+        }
     _onNavigationStateChange(e,THIS){
         
         // console.log(e);
@@ -32,17 +83,10 @@ export default class HomeScreen extends Component {
         this.setState({
             LodingModal:loading_status
         })
+        this.webView.canGoBack = e.canGoBack;
         
     }
-  // _onShouldStartLoadWithRequest(e) {
-    //     let url = e.url;
-    //     console.log("url on request:",url);
-    //     // if(e.url == Global.WEB_URL+'PaymentStatus'){
-    //     //     console.log("goBack")
-    //     // }
-    //     // return true;
-    // }
-  
+
     render() {
         const {renderCoponentFlag} = this.state;
         const StatusBarHeight = StatusBar.currentHeight;
@@ -57,7 +101,7 @@ export default class HomeScreen extends Component {
                         // source={{html: this.state.html}}
 
                         // on error relading
-                        ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
+                        ref={(webView) => { this.webView.ref = webView; }}
                         onError={()=>{
                             // console.log("error.. reloading.. ");
                             WebViewRef && WebViewRef.reload();
