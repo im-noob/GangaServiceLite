@@ -4,10 +4,7 @@ import {
     View,
     Dimensions,
     Modal,
-    StatusBar,
     BackHandler,
-    Alert,
-    ToastAndroid
 } from "react-native";
 
 import { 
@@ -43,30 +40,7 @@ export default class HomeScreen extends Component {
           return true;
         }
         return false;
-          // let timestamp = new Date().getTime();
-          // console.log(timestamp);
-          
-          // if(this.state.backPress - timestamp >= 500 ){
-          //     ToastAndroid.show('Press Again to Exit App', ToastAndroid.SHORT);
-          //     this.setState({
-          //         backPress:1,
-          //     })
-          //     return true;
-          // }
-          // Alert.alert(
-          //     'Payment Notice',
-          //     'Want to cancle Payment ?', [{
-          //         text: 'Cancel',
-          //         onPress: () => console.log('Cancel Pressed'),
-          //         style: 'cancel'
-          //     }, {
-          //         text: 'OK',
-          //         onPress: () => {alert("Opps Payment Failed.. Try again...");  this.props.navigation.goBack(); }
-          //     }, ], {
-          //         cancelable: false
-          //     }
-          // )
-          // return true;
+      
         } 
         backHandler = () => {
           if(this.state.backButtonEnabled) {
@@ -89,11 +63,9 @@ export default class HomeScreen extends Component {
 
     render() {
         const {renderCoponentFlag} = this.state;
-        const StatusBarHeight = StatusBar.currentHeight;
-        StatusBar.setBackgroundColor = "blue";
         if(renderCoponentFlag){
             return(
-                <View style={{flex:1,marginTop:StatusBarHeight}}>
+                <View style={{flex:1,}}>
                     <WebView 
                         source={{uri: 'https://gangaservices.com'}}
 
@@ -122,21 +94,9 @@ export default class HomeScreen extends Component {
                         // onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest}
                         onNavigationStateChange = {(e)=>this._onNavigationStateChange(e,this)} 
 
-                        // onMessage={(event)=>{
-                        //     let message  = event.nativeEvent.data;
-                        //     console.log("postMessage:",message);
-                        //     /* event.nativeEvent.data must be string, i.e. window.postMessage
-                        //     should send only string.
-                        //     * */
-                        // }}
-                        
-                        
-                        
-
-
                     />
                     <Modal
-                        animationType='slide'
+                        animationType='fade'
                         transparent={true}
                         visible={this.state.LodingModal}
                         onRequestClose={() => {
