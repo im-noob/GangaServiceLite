@@ -11,11 +11,11 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/roundnomar.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/round.png",
       "resizeMode": "contain",
-      "backgroundColor": "#2874f0"
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gangaservices.gslite"
+    },
+    "android": {
+      "package": "com.gangaservices.gslite"
     },
     "androidStatusBar": {
       "backgroundColor": "#2874f0"
