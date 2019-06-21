@@ -28,7 +28,8 @@
       "bundleIdentifier": "com.gangaservices.gslite"
     },
     "android": {
-      "package": "com.gangaservices.gslite"
+      "package": "com.gangaservices.gslite",
+      "versionCode": 1
     },
     "androidStatusBar": {
       "backgroundColor": "#2874f0"
